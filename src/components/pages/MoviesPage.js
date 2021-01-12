@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import MoviesList from './MoviesList';
+import MoviesList from '../MoviesList';
+import fetchMovies from '../../actions/moviesAction';
 
 export class MoviesPage extends Component {
 
     static propTypes={
-        movies : propTypes.array.isRequired
+        movies : propTypes.object.isRequired
     };
 
+    componentDidMount(){
+        this.props.fetchMovies();
+    }
+
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <div>
                 <h2>Movies Page</h2>
-                <MoviesList movies={this.props.movies}/>
+                <MoviesList propsMovies={this.props.movies}/>
             </div>
         )
     }
@@ -26,7 +31,7 @@ export class MoviesPage extends Component {
     }
 }*/
 
-//bring state from store!
+//get state from store!
 //moviesReducer is comes from doc name witch we send state to comp;
 const mapStateToProps = ({moviesReducer}) => {
     return {
@@ -34,9 +39,9 @@ const mapStateToProps = ({moviesReducer}) => {
     }
 }
 
-//bring dispatches from the action!
+  //get dispatches from the action!
 const mapDispatchToProps = {
-    
+    fetchMovies
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoviesPage)
